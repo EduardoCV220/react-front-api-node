@@ -1,9 +1,11 @@
 import { Component, useState, useEffect } from "react";
 import { useNavigate } from 'react-router';
+import api from '../services/api';
+
 
 export default function Login() {
 
-    const [email, setEmail] = useState('');
+    const [id_usuario, setIdUsuario] = useState('');
     const [senha, setSenha] = useState('');
     const [erro, setErro] = useState('');
     const navigate = useNavigate();
@@ -11,23 +13,19 @@ export default function Login() {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        const res = await fetch('http://localhost:3000/login', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ email, senha }),
-        });
+        try {
+            await api.post('/login', { id_usuario, senha }, { withCredentials: true });
 
-        const data = await res.json();
+            // Remova o uso de localStorage:
+            // localStorage.setItem('token', res.data.token);
 
-        if (res.ok) {
-            localStorage.setItem('token', data.token);
             navigate('/home');
-        } else {
-            setErro(data.mensagem);
+        } catch (err: any) {
+            setErro(err.response?.data?.mensagem || 'Erro ao fazer login');
         }
     };
+
+
 
     return (
         <div className="min-h-screen flex items-center justify-center">
@@ -38,10 +36,10 @@ export default function Login() {
 
                 <form onSubmit={handleSubmit} className="space-y-4">
                     <input
-                        type="email"
-                        placeholder="Email"
-                        value={email}
-                        onChange={e => setEmail(e.target.value)}
+                        type="text"
+                        placeholder="Id"
+                        value={id_usuario}
+                        onChange={e => setIdUsuario(e.target.value)}
                         className="w-full px-4  text-black py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
                     />
                     <input

@@ -13,6 +13,7 @@ export default function Login() {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
+
         try {
             await api.post('/login', { id_usuario, senha }, { withCredentials: true });
 
@@ -39,6 +40,7 @@ export default function Login() {
                         type="text"
                         placeholder="Id"
                         value={id_usuario}
+                        required
                         onChange={e => setIdUsuario(e.target.value)}
                         className="w-full px-4  text-black py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
                     />
@@ -46,6 +48,7 @@ export default function Login() {
                         type="password"
                         placeholder="Senha"
                         value={senha}
+                        required
                         onChange={e => setSenha(e.target.value)}
                         className="w-full px-4  text-black py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
                     />

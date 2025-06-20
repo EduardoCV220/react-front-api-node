@@ -22,6 +22,12 @@ export default function EditarProdutoModal({ produto, onClose, onSuccess }: Prop
     const [erro, setErro] = useState("");
 
     const handleSalvar = async () => {
+
+        if (!codigo || !descricao) {
+            setErro("Preencha todos os campos obrigatórios.");
+            return;
+        }
+
         const result = await MySwal.fire({
             title: "Tem certeza?",
             text: "Deseja realmente editar esse Item?!",
@@ -35,12 +41,28 @@ export default function EditarProdutoModal({ produto, onClose, onSuccess }: Prop
 
         if (result.isConfirmed) {
             try {
-                await api.put(`/editarProduto/${produto.id}`, {
+                const res = await api.put(`/editarProduto/${produto.id}`, {
                     codigo,
                     descricao,
                 });
 
-                onSuccess();
+                if (res.data.status == 'success') {
+                    MySwal.fire({
+                        title: "Sucesso",
+                        text: "Produto editado com sucesso",
+                        icon: "success"
+                    });
+
+                    onSuccess();
+                }
+                else {
+                    MySwal.fire({
+                        title: "Erro",
+                        text: res.data.message,
+                        icon: "error"
+                    });
+                }
+
             } catch (err) {
                 setErro("Erro ao atualizar produto");
                 console.error(err);

@@ -1,3 +1,54 @@
+# PixelApp — Frontend com React Router + Vite + API Node.js
+
+Este projeto é um frontend moderno desenvolvido em **React** com **React Router v7**, construído com **Vite** e integrado a uma API em **Node.js + MySQL**. O sistema é uma base para aplicações protegidas com autenticação via JWT, controle de sessão por cookies HTTP-only, e rotas privadas.
+
+---
+
+## 🚀 Tecnologias utilizadas
+
+- **React** (v18+)
+- **React Router Dom v7**
+- **TypeScript**
+- **TailwindCSS**
+- **SweetAlert2** (para feedbacks e confirmação de ações)
+- **Axios** (com suporte a cookies - `withCredentials`)
+- **Vite** (ambiente de desenvolvimento rápido)
+
+---
+
+## 🔐 Funcionalidades principais
+
+- Autenticação de usuários com **JWT** (armazenado via cookies seguros).
+- Roteamento protegido com carregamento (`loader`) e redirecionamento de usuários não autenticados.
+- Layout dinâmico com navegação (NavBar) apenas em páginas privadas.
+- CRUD de produtos com:
+  - Listagem em tabela.
+  - Filtros por **código** ou **descrição**.
+  - Cadastro e edição via modal.
+  - Exclusão com confirmação.
+- Integração com backend Node.js (Express + MySQL) utilizando controllers e models organizados.
+
+---
+
+## 📂 Estrutura de Pastas (Frontend)
+
+src/
+├── components/
+│ ├── Nav.tsx # Navegação entre páginas privadas
+├── routes/
+│ ├── Login.tsx # Tela de login
+│ ├── private/
+│ ├──├── Produto.tsx # Tela de produtos
+│ ├──├── editarProduto.tsx # Modal de edição de produtos
+│ ├──├── home.tsx
+│ ├──├── cadastrarProduto.tsx Tela de Cadastro produtos
+│── layouts/
+│ └── \_\_layout.tsx # Layout com <Outlet /> e Nav para rotas seguras
+├── services/
+│ └── api.ts # Configuração base do Axios
+├── routes.ts
+└── root.tsx
+
 # Welcome to React Router!
 
 A modern, production-ready template for building full-stack React applications using React Router.
